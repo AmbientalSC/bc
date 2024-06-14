@@ -61,8 +61,8 @@
             }
         }
         var map = L.map('map', {
-            zoomControl:false, maxZoom:13, minZoom:1
-        }).fitBounds([[-27.0038,-48.6179],[-27.0038,-48.6179,-48.6179]]);
+            zoomControl:false, maxZoom:20, minZoom:1
+        }).fitBounds([[-28.668321059401574,-53.2387400142195],[-24.74400790064065,-46.2825403337050]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix(' <a href="https://github.com/AmbientalSC" title="Ambiental Limpeza Urbana e Saneamento Ltda">Alysson Krombauer - rev14/06/24</a> &middot;<a href="https://ambiental.sc/" target="_blank">Ambiental.sc</a> &middot;');        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -1131,12 +1131,18 @@
         });
         bounds_group.addLayer(layer_Volumosos_3);
         map.addLayer(layer_Volumosos_3);
-        var osmGeocoder = new L.Control.Geocoder({
+        var googleGeocoder = new L.Control.Geocoder({
+            geocoder: L.Control.Geocoder.google('AIzaSyCiKpZmnL9TQXOJd9Qbzw2agE9kxnTGZ38', {}),
             collapsed: false,
             position: 'topleft',
             text: 'Search',
             title: 'Testing'
         }).addTo(map);
+        googleGeocoder.on('markgeocode', function(e) {
+            var latlng = e.geocode.center;
+            console.log('Latitude: ' + latlng.lat + ', Longitude: ' + latlng.lng);
+        })
+
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .className += ' fa fa-search';
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
@@ -1253,34 +1259,46 @@
         }
             document.getElementById("menu").appendChild(
                 document.createElement("div"));
-            var div_OPERACAO = document.createElement('div');
+                var div_OPERACAO = document.createElement('div');
             div_OPERACAO.id = "div_OPERACAO";
-            div_OPERACAO.className= "filterselect";
+            div_OPERACAO.className = "filterselect";
             document.getElementById("menu").appendChild(div_OPERACAO);
-            sel_OPERACAO = document.createElement('select');
+
+            var sel_OPERACAO = document.createElement('select');
             sel_OPERACAO.multiple = true;
             sel_OPERACAO.size = 3;
             sel_OPERACAO.id = "sel_OPERACAO";
-            var OPERACAO_options_str = "<option value='Domiciliar'>Domiciliar</option>";
-            sel_OPERACAO.onchange = function(){filterFunc()};
-            OPERACAO_options_str  += '<option value="Seletiva">Seletiva</option>';
-            OPERACAO_options_str  += '<option value="VOLUMOSOS">Volumosos</option>';
+
+            // Adicione as opções e marque "Domiciliar" como selecionada
+            var OPERACAO_options_str = "<option value='Domiciliar' selected>Domiciliar</option>";
+            OPERACAO_options_str += '<option value="Seletiva">Seletiva</option>';
+            OPERACAO_options_str += '<option value="VOLUMOSOS">Volumosos</option>';
+
             sel_OPERACAO.innerHTML = OPERACAO_options_str;
+
+            sel_OPERACAO.onchange = function() {
+                filterFunc();
+            };
+
             div_OPERACAO.appendChild(sel_OPERACAO);
+
             var lab_OPERACAO = document.createElement('div');
             lab_OPERACAO.className = 'filterlabel';
             div_OPERACAO.appendChild(lab_OPERACAO);
+
             var reset_OPERACAO = document.createElement('div');
             reset_OPERACAO.innerHTML = 'Limpar filtro';
             reset_OPERACAO.className = 'filterlabel';
             reset_OPERACAO.onclick = function() {
                 var options = document.getElementById("sel_OPERACAO").options;
-                for (var i=0; i < options.length; i++) {
+                for (var i = 0; i < options.length; i++) {
                     options[i].selected = false;
                 }
                 filterFunc();
             };
+
             div_OPERACAO.appendChild(reset_OPERACAO);
+
         resetLabels([layer_Volumosos_3]);
         map.on("zoomend", function(){
             resetLabels([layer_Volumosos_3]);
