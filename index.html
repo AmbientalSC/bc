@@ -21,7 +21,8 @@
             margin: 0;
         }
         </style>
-        <title></title>
+         <title>Consulta de setores - BC</title>
+         <link rel="shortcut icon" type="image/jpg" href="icon.ico"/>  
     </head>
     <body>
         <div id="map">
@@ -63,7 +64,7 @@
             zoomControl:false, maxZoom:20, minZoom:1
         }).fitBounds([[-28.668321059401574,-53.2387400142195],[-24.74400790064065,-46.28254033370503]]);
         var hash = new L.Hash(map);
-        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        map.attributionControl.setPrefix(' <a href="https://github.com/AmbientalSC" title="Ambiental Limpeza Urbana e Saneamento Ltda">Alysson Krombauer - rev14/06/24</a> &middot;<a href="https://ambiental.sc/" target="_blank">Ambiental.sc</a> &middot;');        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
         function removeEmptyRowsFromPopupContent(content, feature) {
          var tempDiv = document.createElement('div');
@@ -1270,7 +1271,7 @@
             lab_OPERACAO.className = 'filterlabel';
             div_OPERACAO.appendChild(lab_OPERACAO);
             var reset_OPERACAO = document.createElement('div');
-            reset_OPERACAO.innerHTML = 'clear filter';
+            reset_OPERACAO.innerHTML = 'Limpar filtro';
             reset_OPERACAO.className = 'filterlabel';
             reset_OPERACAO.onclick = function() {
                 var options = document.getElementById("sel_OPERACAO").options;
