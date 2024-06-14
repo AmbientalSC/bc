@@ -20,12 +20,22 @@
             padding: 0;
             margin: 0;
         }
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
         </style>
          <title>Consulta de setores - BC</title>
          <link rel="shortcut icon" type="image/jpg" href="icon.ico"/>  
     </head>
     <body>
+
         <div id="map">
+        <div id="embedded-map">
+            <iframe src="https://www.google.com/maps?q&layer=c&cbll=-26.33994,-48.84122&cbp=11,0,0,0,0" allowfullscreen></iframe>
+        </div>
+            
         </div>
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script>
@@ -1138,10 +1148,6 @@
             text: 'Search',
             title: 'Testing'
         }).addTo(map);
-        googleGeocoder.on('markgeocode', function(e) {
-            var latlng = e.geocode.center;
-            console.log('Latitude: ' + latlng.lat + ', Longitude: ' + latlng.lng);
-        })
 
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .className += ' fa fa-search';
